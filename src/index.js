@@ -7,11 +7,11 @@ var cr = () => { };
 // Create a tagged template crlf`...` that formats text using CRLF line endings.
 var crlf = () => { };
 
-const transformLineEnding = (string, lineEnding) => {
+const transformLineEnding = (string, lineEnding, replaceCR, replaceCRLF, replaceLF) => {
     string = (string != null ? string.toString() : "");
-    let replaceLF = LineEndingReplacements.replaceLF();
-    let replaceCRLF = LineEndingReplacements.replaceCRLF();
-    let replaceCR = LineEndingReplacements.replaceCR();
+    replaceLF = LineEndingReplacements.replaceLF();
+    replaceCRLF = LineEndingReplacements.replaceCRLF();
+    replaceCR = LineEndingReplacements.replaceCR();
     if (lineEnding === LineEndings.CR) {
         string = replaceCRLF(string, "\r");
         string = replaceLF(string, "\r");
