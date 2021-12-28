@@ -1,5 +1,18 @@
 // Create a tagged template lf`...` that formats text using LF line endings.
-const lf = () => { };
+const lf = (strings, ...values) => {
+    //implement a template tag
+    return strings.reduce((result, literal, index) => {
+        const transformedString = transformLineEnding(literal, LineEndings.LF);
+
+        let transformedValue = (
+            values[index] != null
+                ? transformLineEnding(values[index], LineEndings.LF)
+                : ""
+        );
+        return `${result}${transformedString}${transformedValue}`;
+    }, "");
+
+};
 
 // Create a tagged template cr`...` that formats text using CR line endings.
 const cr = () => { };
@@ -9,7 +22,7 @@ const crlf = () => { };
 
 const transformLineEnding = (string, lineEnding) => {
     const { replaceCR, replaceLF, replaceCRLF } = LineEndingReplacements;
-        //bc lineEndingReplacements.replaceCR  are their methods
+    //bc lineEndingReplacements.replaceCR  are their methods
     string = (string != null ? string.toString() : "");
 
 
@@ -25,6 +38,8 @@ const transformLineEnding = (string, lineEnding) => {
     }
     return string;
 };
+
+const disableConverter = Symbol.for("crlf-converter-disable")
 
 const LineEndings = {
     CR: Symbol("CR"),
@@ -50,6 +65,7 @@ module.exports = {
     lf,
     cr,
     crlf,
+    disableConverter,
     LineEndings,
     transformLineEnding
 };
